@@ -1,3 +1,4 @@
+(* Length of list, Find elt in list*)
 require import List.
 require import AllCore.
 
