@@ -1,3 +1,4 @@
+(*Square and multiply cost*)
 require import List.
 require import AllCore.
 
@@ -5,6 +6,7 @@ op size (l : 'a list) : int =
 with l = [] => 0
 with l = x :: xs => 1 + size xs.
 
+(*Count the number of 1s in a list*)
 op count1 (l : int list) : int =
 with l = [] => 0
 with l = x :: xs => if x = 1 then (1 + count1 xs) else count1 xs.
