@@ -82,7 +82,7 @@ proc f() : unit = {
       if (x = true) {s <- s + 1; c <- c + 1;} else {s <- s - 1; c <- c + 1;}
 }}}.
 
-ehoare geomDist : RndWalk.f : ((0 < RndWalk.s) /\ (RndWalk.c = 0)) `|` (randomWalkDist RndWalk.s RndWalk.n) ==> (indFnR RndWalk.c (RndWalk.n) RndWalk.s)%xr.
+ehoare rndWalk : RndWalk.f : ((0 < RndWalk.s) /\ (RndWalk.c = 0)) `|` (randomWalkDist RndWalk.s RndWalk.n) ==> (indFnR RndWalk.c (RndWalk.n) RndWalk.s)%xr.
 proof. proc.
   while (rwalkPot RndWalk.c RndWalk.n RndWalk.s). smt. seq 1 : ((0 < RndWalk.s) `|` (2.0%xr * rwalkPot RndWalk.c RndWalk.n RndWalk.s)). rnd. skip. progress. case (0 < RndWalk.s{hr}). simplify. move => H. apply helper.
   smt. auto. progress. case (RndWalk.x{hr} = true). move => H. case (0 < RndWalk.s{hr}). move => H'. simplify. apply helper2. assumption. smt. move => H. case (0 < RndWalk.s{hr}). move => H'. simplify. apply helper3. assumption. smt. skip. progress. case (0 < RndWalk.s{hr}). move => H. simplify. case (RndWalk.c{hr} = 0). move => H'. simplify. rewrite H'. apply rwP4'. assumption. smt. smt. qed. 
