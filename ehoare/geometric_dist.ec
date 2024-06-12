@@ -1,3 +1,4 @@
+(* Need to have expVal.ec in buffer *)
 require import Bool Int Real Distr DInterval.
 require import AllCore Distr List DInterval StdOrder.
 require import Array.
@@ -5,20 +6,20 @@ require import Xreal.
 import StdBigop.Bigreal.
 import StdBigop.Bigint.
 
+
 op indFn (i j x : int) : real = if (i = j /\ x <> 1) then 1.0 else 0.0.
 
 op geomPot (n c : int) (x : int) : real = if x <> 1 then (if n = c then 1.0 else 0.0) else (if (c <= n /\ x = 1) then 0.5 * (0.5^(n - c)) else 0.0).
 
 lemma potIneq : forall (i c x : int), (indFn i c x)%pos <= (geomPot i c x)%pos.
-    proof. admitted.
+    proof. rewrite /indFn. rewrite/geomPot. progress. smt. qed. 
+      
 
     op hGeom (i c x : int) : real = if (x = 1 /\ c = i) then 0.0 else (if (x <> 1 /\ c = i) then 1.0 else 2.0 * geomPot i c x).
 
 lemma hIneq : forall (i c : int), Ep [0..1] (fun (x : int) => (hGeom i c x)%xr) <=
     (geomPot i c 1)%xr.
- proof. move => i c. case (i = c). move => H.
-rewrite H. admitted.    
-    
+ proof. progress. rewrite L3. rewrite/hGeom. rewrite/ geomPot. smt. qed.  
     
 
 
