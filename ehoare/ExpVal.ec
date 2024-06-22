@@ -50,7 +50,7 @@ case (x = 0). simplify. auto. smt. rewrite L'. smt. qed.
 lemma Lb : forall (g : bool -> real), E {0,1} (fun x => g x) = 0.5* (g false + g true).
 proof.  progress.
 rewrite fin_expE /=.
-- by exists [false; true]; split=> //; smt(supp_dbool). search to_seq. admitted.
+- by exists [false; true]; split=> //; smt(supp_dbool). have := Support.perm_eq_enum_to_seq  => /BRA.eq_big_perm   /=.  admitted.
 (*have := perm_eq_d [0 1] => /BRA.eq_big_perm -> /=.
 rewrite dinter1E. simplify. smt.
   qed.*)
