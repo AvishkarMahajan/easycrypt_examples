@@ -57,7 +57,15 @@ rewrite H'. simplify. case (CondUnif.k{hr} <= CondUnif.n{hr}). move => H''. appl
  CondUnif.n{hr} <= CondUnif.m{hr} /\ 0 <= CondUnif.k{hr}).
  move => H. simplify. smt. smt. qed. 
  
-op indFnD (m k y : int) : real = if (1 <= m /\ 0 <= k /\ k <= 2*m -1) then (if k = y then 1.0 else 0.0) else 0.0. 
+op indFnD (m k y : int) : real = if (1 <= m /\ 0 <= k /\ k <= 2*m -1) then (if k = y then 1.0 else 0.0) else 0.0.
+
+lemma helper3 : forall (m k : int), (1 <= m /\
+   0 <= k /\ k <= 2 * m - 1) => Ep [0..1]
+  (fun (x : int) =>
+     Ep [0..m - 1]
+       (fun (y : int) =>
+          (indFnD m k (2 * y + x))%xr)) <=
+(inv (2 * m)%rp)%xr. proof. admitted. (* Every k corresponds to a unique pair (x,y) satisfying the equation k = 2*y + x and vice versa. Since x,y come from independent distributions, the corresponding probability is 1/2m.*)
 
 module Doub_rng = {
 var m : int
@@ -76,7 +84,8 @@ proc f() : unit = {
 
 ehoare doub : Doub_rng.f : (((1 <= Doub_rng.m) /\ (0 <= Doub_rng.k)/\ Doub_rng.k <= (2*Doub_rng.m - 1)) `|` (1.0%xr/(2*Doub_rng.m)%xr )) ==> (indFnD Doub_rng.m Doub_rng.k Doub_rng.y)%xr.
 proof. proc. wp.  auto. progress.  case ( (1 <= Doub_rng.m{hr} /\
-   0 <= Doub_rng.k{hr} /\ Doub_rng.k{hr} <= 2 * Doub_rng.m{hr} - 1)). move => H. simplify. (* Every k corresponds to a unique pair (x,y) satisfying the equation k = 2*y + x and vice versa. Since x,y come from independent distributions, the corresponding probability is 1/2m.*) admitted.
+  0 <= Doub_rng.k{hr} /\ Doub_rng.k{hr} <= 2 * Doub_rng.m{hr} - 1)). move => H. simplify. apply helper3. smt. smt. qed.
+
 (*
 FDR (n) =
 v <- 1; c <- 0;
