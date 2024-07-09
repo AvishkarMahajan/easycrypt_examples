@@ -90,7 +90,7 @@ proof. proc. wp.  auto. progress.  case ( (1 <= Doub_rng.m{hr} /\
 FDR (n) =
 v <- 1; c <- 0;
 
-While  (v < n or c >= n):
+-- While  (v < n or c >= n):
 If (v < n) :
 
 v <- 2v;
@@ -102,7 +102,36 @@ v <- v -n ;
 c <- c - n ;
 
 v <- 2v ;
-c <- 2c + flip() *)
+  c <- 2c + flip() -- *)
+
+(* Fix starting memory values k, n, v, c) then let p(k,n,v,c) be the probability that after executing the program enclosed in (--) we have c = k 
+
+(k, n are fixed throughout)
+
+We have the following reccurence relations
+
+if v >= n and c < n then, if c = k then p (k n v c) = 1.0 else 0.0
+
+if v < n then p(k n v c) = 0.5* p(k n 2v 2c) + 0.5*p(k n 2v 2c + 1)
+
+if v > = n and c >= n then p(k n v c) = 0.5 * p(k n (2v - 2n) (2c - 2n)) + 0.5* p(k n (2v -2n) (2c -2n + 1)).
+
+forall k n v c, 0<= p(k n v c)
+
+      
+For any function h satisfying the above axioms eHoare can prove that prob(c = k) at the end of the program is such that prob(c = k) <= h(k n 0 1)
+
+Since p is a probability and the loop is AST we know that p(0,n,1,0) + p(1,n,1,0)+...+p(n-1,n,1,0) = 1.0.
+ 
+From all the above constraints  does it follow that p(k,n,1,0) <= 1/n if k<n and 0 if k>=n?
+
+
+Similar axioms can be generated for distribution of runtime of the program. *)
+
+
+
+
+
 
 
 

@@ -22,9 +22,9 @@ while (i < n)
  y' <- y - t * v;
 l <- y' :: l;
 i <- i + 1;
- u <- u + f (xi+1)] -(
+ u <- u + f (x'')] -(
 f (x∗) + 
-1/2t (‖xi − x∗‖ − ‖xi+1 − x∗‖) + t*var);} here xi+1 is the head of the list l and xi is the second element of l. x* is the optimizing argument of f.  
+1/2t (‖x' − x∗‖ − ‖x'' − x∗‖) + t*var);} here x'' is the head of the list l and x' is the second element of l. x* is the optimizing argument of f.  
 
 given a memory m define g (m) = u 
 
@@ -32,6 +32,6 @@ Then g is a loop invariant => E(g_final) <= g_int (second, third inequality on p
 
 eHL spec : {u = C /\ var = S | g} P {g} (C is some large positve real, S is also positive)
 
-*)
+Get a telescoping sum resulting in the third inequality on page 5. Then use properties of Lipshitz convex functions to get final bound *)
 
 
